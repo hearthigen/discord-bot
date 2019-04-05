@@ -1,0 +1,32 @@
+{
+  "name": "hearthigen-discord-bot",
+  "version": "0.0.1",
+  "description": "Hearthigen Discord bot runnin discord.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hearthigen/discord-bot.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord",
+    "hearthigen",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "kanalumaddela",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hearthigen/discord-bot/issues"
+  },
+  "homepage": "https://github.com/hearthigen/discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^7.0.0",
+    "node-opus": "^0.3.1",
+    "uws": "^100.0.1"
+  }
+}
