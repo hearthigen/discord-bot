@@ -1,6 +1,11 @@
 const Discord = require('discord.js');
 
 module.exports = class Command {
+    /**
+     * Make the bot instance accessible without having to the individual methods.
+     *
+     * @param bot
+     */
     constructor(bot) {
         this.bot = bot;
     }
@@ -27,10 +32,20 @@ module.exports = class Command {
         return messageContent.split(' ');
     }
 
+    /**
+     * Description of the command.
+     *
+     * @returns {string}
+     */
     static get description() {
         return 'Example description for a command';
     }
 
+    /**
+     * The arguments for this command, both required and optional.
+     *
+     * @returns {{optional: Array, required: Array}}
+     */
     static get args() {
         return {
             required: this.requiredArgs,
@@ -38,14 +53,29 @@ module.exports = class Command {
         };
     }
 
+    /**
+     * Does the command have any args?
+     *
+     * @returns {boolean}
+     */
     static get hasArgs() {
         return this.requiredArgs.length > 0 || this.optionalArgs.length > 0;
     }
 
+    /**
+     * Required args for the command.
+     *
+     * @returns {Array}
+     */
     static get requiredArgs() {
         return [];
     }
 
+    /**
+     * Optional args for the command.
+     *
+     * @returns {Array}
+     */
     static get optionalArgs() {
         return [];
     }
