@@ -8,4 +8,8 @@ module.exports = class Hello extends Command {
     run(message) {
         message.channel.send('Hello '+message.author);
     }
+
+    static get aliases() {
+        return ['hello-world', 'hi'];
+    }
 };

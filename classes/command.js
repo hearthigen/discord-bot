@@ -4,87 +4,46 @@ module.exports = class Command {
     /**
      * Make the bot instance accessible without having to the individual methods.
      *
-     * @param bot
+     * @param {Discord.Client} bot
      */
-    constructor(bot) {
+    constructor(bot= null) {
         this.bot = bot;
+        this._args = [];
     }
 
     /**
-     * Run the command given the message instance and args
+     * Get the literal command.
      *
-     * @param message
-     * @param args
+     * @returns {string}
      */
-    run(message, args) {
-        throw new Error('run() not defined. Arguments given: '+JSON.stringify(args));
+    static get command() {
+        return this.prototype.constructor.name.toLowerCase();
     }
 
     /**
-     * Parse the content of the message and return the required args.
-     * Passes the message instance in case there's some other logic needed.
+     * Get the command name.
      *
-     * @returns {string[]}
-     * @param messageContent
-     * @param msg
+     * @returns {string}
      */
-    static parseArgs(messageContent, msg) {
-        return messageContent.split(' ');
+    static get commandName() {
+        return this.prototype.constructor.name;
     }
 
     /**
-     * Description of the command.
+     * Get the command description.
      *
      * @returns {string}
      */
     static get description() {
-        return 'Example description for a command';
+        return 'No description available';
     }
 
     /**
-     * The arguments for this command, both required and optional.
+     * Command help embed
      *
-     * @returns {{optional: Array, required: Array}}
+     * @returns {RichEmbed}
      */
-    static get args() {
-        return {
-            required: this.requiredArgs,
-            optional: this.optionalArgs,
-        };
-    }
-
-    /**
-     * Does the command have any args?
-     *
-     * @returns {boolean}
-     */
-    static get hasArgs() {
-        return this.requiredArgs.length > 0 || this.optionalArgs.length > 0;
-    }
-
-    /**
-     * Required args for the command.
-     *
-     * @returns {Array}
-     */
-    static get requiredArgs() {
-        return [];
-    }
-
-    /**
-     * Optional args for the command.
-     *
-     * @returns {Array}
-     */
-    static get optionalArgs() {
-        return [];
-    }
-
-    /**
-     *
-     * @returns {module:discord.js.RichEmbed}
-     */
-    static get help() {
+    static help() {
         return this.createEmbed({
             fields: [
                 {
@@ -93,16 +52,81 @@ module.exports = class Command {
                 },
                 {
                     name: 'Available Arguments',
-                    value: '```\n'+(this.hasArgs ? JSON.stringify(this.args, null, 4) : 'None')+'\n```'
+                    value: '```\n'+(this.args.length > 0 ? JSON.stringify(this.args, null, 4) : 'None')+'\n```'
                 }
             ]
         });
     }
 
+    static get aliases() {
+        return [];
+    }
+
+    static get modifiers() {
+        return [];
+    }
+
+    /**
+     * Run the command given the message instance and args
+     *
+     * @param message
+     */
+    run(message) {
+        throw new Error('run() not defined. Arguments given: '+JSON.stringify(args));
+    }
+
+    set message(message) {
+        this.msg = message;
+    }
+
+    get message() {
+        return this.msg;
+    }
+
+    /**
+     * Parse the content of the message and return the required args.
+     * Passes the message instance in case there's some other logic needed.
+     *
+     * @param messageContent
+     * @param {Message} [msg]
+     */
+    parseArgs(messageContent, msg= null) {
+        this._args = messageContent.split(/ +/);
+
+        if (msg) {
+            this.msg = msg;
+        }
+    }
+
+    get parsedArgs() {
+        return this._args;
+    }
+
+    /**
+     * The arguments for this command, both required and optional.
+     *
+     * @returns {Array}
+     */
+    static get args() {
+        return {
+
+        };
+    }
+
+    /**
+     * Does the command have any args?
+     *
+     * @returns {boolean}
+     */
+    static hasArgs() {
+        return this.args.length > 0;
+    }
+
     /**
      * Create an embed so I don't have to require('discord.js') it in the commands themselves.
      *
-     * @returns {module:discord.js.RichEmbed}
+     * @param data
+     * @returns {RichEmbed}
      */
     static createEmbed(data = {}) {
         return new Discord.RichEmbed(data);
