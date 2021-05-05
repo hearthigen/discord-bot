@@ -25,16 +25,16 @@
   },
   "homepage": "https://github.com/hearthigen/discord-bot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.5.0",
     "@types/node": "^11.13.0",
     "axios": "^0.21.0",
     "bluebird": "^3.7.2",
     "compression": "^1.7.4",
     "crypto": "^1.0.1",
     "debug": "^4.3.1",
-    "discord.js": "^12.5.0",
+    "discord.js": "^12.5.1",
     "dotenv": "^7.0.0",
     "express": "^4.17.1",
-    "node-opus": "^0.3.1",
     "qs": "^6.9.4",
     "redis": "^3.0.2",
     "uws": "^100.0.1"
